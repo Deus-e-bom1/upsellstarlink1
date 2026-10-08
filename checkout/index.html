@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <title>Checkout | Starlink</title>
+    <link rel="stylesheet" href="/assets/styles-Cl5mXxVp.css">
+    <link rel="stylesheet" href="/_externos/fonts.googleapis.com/css2__q4btmof.css">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <style>
+      :root { color-scheme: dark; font-family: Inter, ui-sans-serif, system-ui, sans-serif; background: #050505; color: #f5f5f5; }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-width: 320px; background: #050505; color: #f5f5f5; }
+      a { color: inherit; }
+      button, input { font: inherit; }
+      .topbar { min-height: 64px; border-bottom: 1px solid #252525; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px max(20px, calc((100vw - 1120px) / 2)); }
+      .brand { font-size: 17px; font-weight: 750; letter-spacing: .16em; text-decoration: none; }
+      .back { color: #c6c6c6; font-size: 14px; text-decoration: none; }
+      .back:hover { color: #fff; text-decoration: underline; }
+      main { width: min(1120px, 100% - 40px); margin: 0 auto; padding: 36px 0 72px; }
+      .progress { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 0 auto 36px; color: #a8a8a8; font-size: 13px; }
+      .step { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+      .number { width: 28px; height: 28px; border: 1px solid #606060; border-radius: 50%; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+      .step.done .number, .step.current .number { color: #050505; background: #f5f5f5; border-color: #f5f5f5; }
+      .rule { width: min(10vw, 76px); height: 1px; background: #414141; }
+      h1 { margin: 0; font-size: 28px; line-height: 1.2; font-weight: 700; }
+      .intro { margin: 8px 0 28px; color: #b6b6b6; line-height: 1.5; }
+      .layout { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(270px, .7fr); gap: 28px; align-items: start; }
+      .section-title { margin: 0 0 18px; font-size: 17px; }
+      .fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+      .field { display: grid; gap: 7px; min-width: 0; }
+      .wide { grid-column: 1 / -1; }
+      label { color: #ededed; font-size: 13px; font-weight: 600; }
+      input { width: 100%; min-height: 46px; border: 1px solid #454545; border-radius: 6px; background: #111; color: #fff; padding: 10px 12px; }
+      input::placeholder { color: #898989; }
+      input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid #f4f4f4; outline-offset: 3px; }
+      input[aria-invalid="true"] { border-color: #ff8686; }
+      fieldset { min-width: 0; padding: 0; margin: 26px 0 0; border: 0; }
+      legend { margin-bottom: 16px; font-size: 16px; font-weight: 700; }
+      .panel { border: 1px solid #303030; border-radius: 8px; background: #0b0b0b; padding: 20px; }
+      .summary-label { color: #a7a7a7; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+      .summary-name { margin: 7px 0 22px; font-size: 18px; font-weight: 700; }
+      .line { display: flex; justify-content: space-between; gap: 14px; color: #bdbdbd; font-size: 14px; padding: 9px 0; }
+      .line strong { color: #f5f5f5; text-align: right; }
+      .total { border-top: 1px solid #333; margin-top: 8px; padding-top: 16px; font-size: 16px; }
+      .total strong { font-size: 20px; }
+      .note { margin: 18px 0 0; color: #aaa; font-size: 12px; line-height: 1.55; }
+      .submit { width: 100%; min-height: 50px; margin-top: 24px; border: 0; border-radius: 6px; background: #f5f5f5; color: #090909; font-weight: 700; cursor: pointer; }
+      .submit:hover:not(:disabled) { background: #ddd; }
+      .submit:disabled { opacity: .65; cursor: wait; }
+      .message { min-height: 22px; margin: 14px 0 0; font-size: 13px; line-height: 1.5; }
+      .error { color: #ff9b9b; }
+      .status { color: #b8e6c7; }
+      .payment { margin-top: 24px; }
+      .qr { display: block; width: min(100%, 240px); aspect-ratio: 1; object-fit: contain; margin: 18px auto; background: #fff; padding: 8px; border-radius: 4px; }
+      .qr-code-display { width: min(100%, 240px); aspect-ratio: 1; margin: 18px auto; background: #fff; padding: 8px; border-radius: 4px; }
+      .qr-code-display svg { display: block; width: 100%; height: 100%; shape-rendering: crispEdges; }
+      .pix-code { overflow-wrap: anywhere; padding: 12px; border: 1px solid #393939; border-radius: 6px; background: #101010; color: #eee; font: 12px/1.5 ui-monospace, monospace; }
+      .copy { min-height: 42px; margin-top: 12px; padding: 0 14px; border: 1px solid #555; border-radius: 6px; background: transparent; color: #fff; cursor: pointer; }
+      .copy:hover { background: #181818; }
+      @media (max-width: 760px) {
+        main { padding-top: 24px; }
+        .layout { grid-template-columns: 1fr; }
+        .summary { grid-row: 1; }
+        h1 { font-size: 24px; }
+      }
+      @media (max-width: 480px) {
+        .topbar { min-height: 58px; padding-inline: 16px; }
+        main { width: calc(100% - 32px); }
+        .progress { gap: 7px; font-size: 11px; }
+        .step { gap: 5px; }
+        .number { width: 25px; height: 25px; }
+        .rule { width: 6vw; }
+        .fields { grid-template-columns: 1fr; }
+        .wide { grid-column: auto; }
+        .panel { padding: 16px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Starlink, página inicial">STARLINK</a>
+      <a class="back" id="back-link" href="/">Voltar</a>
+    </header>
+    <main>
+      <nav class="progress" aria-label="Etapas da compra">
+        <span class="step done"><span class="number">1</span> Plano</span>
+        <span class="rule" aria-hidden="true"></span>
+        <span class="step done"><span class="number">2</span> Chip</span>
+        <span class="rule" aria-hidden="true"></span>
+        <span class="step current" aria-current="step"><span class="number">3</span> Pagamento</span>
+      </nav>
+      <h1>Finalize seu pedido</h1>
+      <p class="intro">Informe seus dados para gerar um PIX seguro.</p>
+      <div class="layout">
+        <section aria-labelledby="customer-heading">
+          <form id="checkout-form" novalidate>
+            <h2 class="section-title" id="customer-heading">Dados do comprador</h2>
+            <div class="fields">
+              <div class="field wide">
+                <label for="name">Nome completo</label>
+                <input id="name" name="name" autocomplete="name" required minlength="3">
+              </div>
+              <div class="field">
+                <label for="cpf">CPF</label>
+                <input id="cpf" name="cpf" type="text" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="000.000.000-00" required aria-describedby="cpf-help">
+                <span id="cpf-help" class="note">Digite os 11 dígitos do CPF.</span>
+              </div>
+              <div class="field">
+                <label for="phone">Celular</label>
+                <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" aria-describedby="phone-help" required>
+                <span id="phone-help" class="note">Inclua o DDD.</span>
+              </div>
+              <div class="field wide">
+                <label for="email">E-mail</label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="voce@exemplo.com" required>
+              </div>
+            </div>
+            <fieldset id="shipping-fields" hidden>
+              <legend>Endereço de entrega</legend>
+              <div class="fields">
+                <div class="field">
+                  <label for="cep">CEP</label>
+                  <input id="cep" name="cep" inputmode="numeric" autocomplete="postal-code" maxlength="9">
+                </div>
+                <div class="field">
+                  <label for="state">Estado</label>
+                  <input id="state" name="state" autocomplete="address-level1" maxlength="2">
+                </div>
+                <div class="field wide">
+                  <label for="street">Rua</label>
+                  <input id="street" name="street" autocomplete="address-line1">
+                </div>
+                <div class="field">
+                  <label for="number">Número</label>
+                  <input id="number" name="number" autocomplete="address-line2">
+                </div>
+                <div class="field">
+                  <label for="complement">Complemento</label>
+                  <input id="complement" name="complement" autocomplete="off">
+                </div>
+                <div class="field">
+                  <label for="neighborhood">Bairro</label>
+                  <input id="neighborhood" name="neighborhood" autocomplete="address-level3">
+                </div>
+                <div class="field">
+                  <label for="city">Cidade</label>
+                  <input id="city" name="city" autocomplete="address-level2">
+                </div>
+              </div>
+            </fieldset>
+            <button class="submit" id="submit-button" type="submit">Continuar para pagamento</button>
+            <p class="message" id="form-message" role="alert"></p>
+          </form>
+          <section class="payment panel" id="payment-panel" aria-labelledby="payment-heading" hidden>
+            <h2 class="section-title" id="payment-heading">Pague com PIX</h2>
+            <p class="note">Escaneie o QR Code ou copie o código. A confirmação aparece aqui automaticamente.</p>
+            <img class="qr" id="qr-image" alt="QR Code do pagamento PIX" hidden>
+            <div class="qr-code-display" id="generated-qr" role="img" aria-label="QR Code PIX" hidden></div>
+            <div class="pix-code" id="pix-code"></div>
+            <button class="copy" id="copy-button" type="button">Copiar código PIX</button>
+            <p class="message status" id="payment-status" role="status">Aguardando pagamento.</p>
+          </section>
+        </section>
+        <aside class="panel summary" aria-labelledby="summary-heading">
+          <h2 class="section-title" id="summary-heading">Resumo do pedido</h2>
+          <div class="summary-label">Plano selecionado</div>
+          <p class="summary-name" id="product-name">Carregando plano...</p>
+          <div class="line"><span>Chip</span><strong id="plan-price">--</strong></div>
+          <div class="line"><span>Entrega</span><strong id="delivery-price">--</strong></div>
+          <div class="line total"><span>Total via PIX</span><strong id="total-price">--</strong></div>
+          <p class="note">O PIX será gerado após o envio dos dados do comprador.</p>
+        </aside>
+      </div>
+    </main>
+    <script type="module">
+      import { toQrSvg } from "/assets/qr-code.mjs";
+
+      (() => {
+        const planDefaults = {
+          "150gb": { label: "Chip Starlink 150 GB", priceInCents: 4998 },
+          "450gb": { label: "Chip Starlink 450 GB", priceInCents: 5998 },
+          "600gb": { label: "Chip Starlink 600 GB", priceInCents: 7998 },
+        };
+        const deliveryFee = 999;
+        const params = new URLSearchParams(location.search);
+        const planId = params.get("plan") || "450gb";
+        const type = params.get("tipo") === "physical" ? "physical" : "virtual";
+        const plan = planDefaults[planId];
+        const money = cents => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(cents / 100);
+        const form = document.getElementById("checkout-form");
+        const button = document.getElementById("submit-button");
+        const formMessage = document.getElementById("form-message");
+        const shippingFields = document.getElementById("shipping-fields");
+        const cpfInput = document.getElementById("cpf");
+        const phoneInput = document.getElementById("phone");
+        const cpfHelp = document.getElementById("cpf-help");
+        const phoneHelp = document.getElementById("phone-help");
+        let amount = plan ? plan.priceInCents + (type === "physical" ? deliveryFee : 0) : 0;
+        let transactionId = null;
+        let pollTimer = null;
+
+        if (!plan) {
+          document.getElementById("product-name").textContent = "Plano não encontrado";
+          form.hidden = true;
+          formMessage.textContent = "Volte à escolha de planos e selecione uma opção válida.";
+          formMessage.className = "message error";
+          return;
+        }
+
+        document.getElementById("product-name").textContent = plan.label + (type === "physical" ? " · Chip físico" : " · eSIM");
+        document.getElementById("plan-price").textContent = money(plan.priceInCents);
+        document.getElementById("delivery-price").textContent = type === "physical" ? money(deliveryFee) : "Grátis";
+        document.getElementById("total-price").textContent = money(amount);
+        document.getElementById("back-link").href = `/escolher-chip?plan=${encodeURIComponent(planId)}`;
+        shippingFields.hidden = type !== "physical";
+        cpfInput.addEventListener("input", () => {
+          cpfInput.setCustomValidity("");
+          cpfInput.removeAttribute("aria-invalid");
+          cpfHelp.textContent = "Digite os 11 dígitos do CPF.";
+        });
+        phoneInput.addEventListener("input", () => {
+          phoneInput.setCustomValidity("");
+          phoneInput.removeAttribute("aria-invalid");
+          phoneHelp.textContent = "Inclua o DDD.";
+        });
+        fetch("/api/plan-prices").then(response => response.ok ? response.json() : null).then(rows => {
+          const current = Array.isArray(rows) && rows.find(row => row.id === planId);
+          if (!current || !Number.isFinite(Number(current.priceInCents))) return;
+          plan.label = current.label;
+          plan.priceInCents = Number(current.priceInCents);
+          amount = plan.priceInCents + (type === "physical" ? deliveryFee : 0);
+          document.getElementById("product-name").textContent = plan.label + (type === "physical" ? " · Chip físico" : " · eSIM");
+          document.getElementById("plan-price").textContent = money(plan.priceInCents);
+          document.getElementById("total-price").textContent = money(amount);
+        }).catch(() => {});
+
+        form.addEventListener("submit", async event => {
+          event.preventDefault();
+          formMessage.textContent = "";
+          formMessage.className = "message";
+          const firstInvalid = [...form.querySelectorAll("input[required]")].find(input => !input.checkValidity());
+          if (firstInvalid) {
+            firstInvalid.reportValidity();
+            firstInvalid.focus();
+            return;
+          }
+          if (!isValidCpf(cpfInput.value)) {
+            const message = "Informe um CPF válido com 11 dígitos.";
+            cpfInput.setAttribute("aria-invalid", "true");
+            cpfHelp.textContent = message;
+            cpfInput.setCustomValidity(message);
+            cpfInput.reportValidity();
+            cpfInput.focus();
+            return;
+          }
+          if (![10, 11].includes(phoneInput.value.replace(/\D/g, "").length)) {
+            const message = "Informe um celular com DDD.";
+            phoneInput.setAttribute("aria-invalid", "true");
+            phoneHelp.textContent = message;
+            phoneInput.setCustomValidity(message);
+            phoneInput.reportValidity();
+            phoneInput.focus();
+            return;
+          }
+          if (type === "physical") {
+            const requiredShipping = ["cep", "street", "number", "neighborhood", "city", "state"];
+            const missing = requiredShipping.map(id => document.getElementById(id)).find(input => !input.value.trim());
+            if (missing) {
+              missing.setAttribute("aria-invalid", "true");
+              missing.focus();
+              formMessage.textContent = "Preencha o endereço de entrega para continuar.";
+              formMessage.className = "message error";
+              return;
+            }
+          }
+
+          const values = new FormData(form);
+          const payload = {
+            nome: String(values.get("name")).trim(),
+            cpf: String(values.get("cpf")),
+            email: String(values.get("email")).trim(),
+            telefone: String(values.get("phone")),
+            plan: planId,
+            tipo: type,
+            valor: amount / 100,
+            descricao: plan.label,
+            external_id_client: `starlink-${Date.now()}`,
+          };
+          if (type === "physical") {
+            payload.shipping = {
+              cep: String(values.get("cep")),
+              logradouro: String(values.get("street")),
+              numero: String(values.get("number")),
+              complemento: String(values.get("complement") || ""),
+              bairro: String(values.get("neighborhood")),
+              cidade: String(values.get("city")),
+              estado: String(values.get("state")).toUpperCase(),
+              pais: "Brasil",
+            };
+          }
+
+          button.disabled = true;
+          button.textContent = "Gerando PIX...";
+          try {
+            const response = await fetch("/api/create-pix", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(data.error || "Não foi possível gerar o PIX.");
+            transactionId = data.transactionId;
+            document.getElementById("pix-code").textContent = data.qrcode;
+            const qr = document.getElementById("qr-image");
+            if (data.qrcodeImage) {
+              qr.src = data.qrcodeImage;
+              qr.hidden = false;
+            } else {
+              document.getElementById("generated-qr").innerHTML = toQrSvg(data.qrcode);
+              document.getElementById("generated-qr").hidden = false;
+            }
+            form.hidden = true;
+            document.getElementById("payment-panel").hidden = false;
+            pollTimer = setInterval(checkPayment, 4000);
+          } catch (error) {
+            formMessage.textContent = error.message || "Não foi possível gerar o PIX. Tente novamente.";
+            formMessage.className = "message error";
+            button.disabled = false;
+            button.textContent = "Continuar para pagamento";
+          }
+        });
+
+        document.getElementById("copy-button").addEventListener("click", async () => {
+          const code = document.getElementById("pix-code").textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+            document.getElementById("payment-status").textContent = "Código PIX copiado.";
+          } catch {
+            document.getElementById("payment-status").textContent = "Selecione e copie o código PIX.";
+          }
+        });
+
+        async function checkPayment() {
+          if (!transactionId) return;
+          try {
+            const response = await fetch("/api/check-payment", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ transactionId }),
+            });
+            const data = await response.json().catch(() => ({}));
+            if (response.ok && data.status === "PAID") {
+              clearInterval(pollTimer);
+              document.getElementById("payment-status").textContent = "Pagamento aprovado.";
+            }
+          } catch { /* Keep polling while the PIX remains pending. */ }
+        }
+
+        function isValidCpf(value) {
+          const digits = String(value || "").replace(/\D/g, "");
+          if (digits.length !== 11 || /^(\d)\1{10}$/.test(digits)) return false;
+          const digit = length => {
+            let sum = 0;
+            for (let i = 0; i < length; i += 1) sum += Number(digits[i]) * (length + 1 - i);
+            const result = (sum * 10) % 11;
+            return result === 10 ? 0 : result;
+          };
+          return digit(9) === Number(digits[9]) && digit(10) === Number(digits[10]);
+        }
+      })();
+    </script>
+  </body>
+</html>

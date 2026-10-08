@@ -1,0 +1,1 @@
+import{o as e}from"./useSelector-C0pj3Bsi.js";import{C as t}from"./index-Cr4Nap0G.js";var n=e(),r=()=>(0,n.jsx)(t,{});export{r as component};
